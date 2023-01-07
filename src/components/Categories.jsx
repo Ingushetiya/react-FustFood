@@ -8,7 +8,7 @@ const Categories = () => {
     }
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
   return (
-    <div class="categories">
+    <div className="categories">
       <ul>
         {categories.map((item, index)=>{
             return(
