@@ -26,7 +26,7 @@ function App() {
               {pizzas.map((item)=>{
                 return (
                   <PizzaBlock
-                  key={item} 
+                  key={item.id} 
                   {...item}
                   />
                 )
