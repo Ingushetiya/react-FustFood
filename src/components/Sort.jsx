@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Sort = () => {
 
   const [sortOpen, setSortOpen] = useState(false);
-  const [sortIndex, setSortIndex] = useState(0)
+  
 
   const list = ["популярности", "цене", "алфавиту"] 
   
