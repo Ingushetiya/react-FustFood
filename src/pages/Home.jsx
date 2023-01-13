@@ -4,6 +4,8 @@ import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
+import Paginotion from '../components/Pagination';
+
 
 const Home = ({search}) => {
 
@@ -20,8 +22,7 @@ const Home = ({search}) => {
       const sortBy = sortIndex.sort.replace("-", "")
       const category = activeIndex > 0 && `category=${activeIndex}`
       const searchValue = search && `&filter=${search}`;
-      console.log(searchValue);
-    fetch(`https://63bb21d2cf99234bfa53c0bd.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${searchValue}`)
+    fetch(`https://63bb21d2cf99234bfa53c0bd.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${searchValue}`)
       .then((res) => {
         return res.json();
       })
@@ -53,6 +54,7 @@ const Home = ({search}) => {
           ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
           : filtered }
       </div>
+      <Paginotion />
     </div>
   );
 };
