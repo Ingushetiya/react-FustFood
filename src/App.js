@@ -1,28 +1,22 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
-
-
-
-import "./scss/app.scss"
 import Home from './pages/Home';
-import { Route, Routes } from 'react-router-dom';
 import Cart from './pages/Cart';
+import "./scss/app.scss"
 // Надо очистить App от лишнего мусора
 
 function App() {
-
-
-
+  const [search, setSearch] = useState('')
   return (
     <div className="App">
       <div className="wrapper">
-        <Header />
+        <Header search={search} setSearch={setSearch} />
         <div className="content">
          
             <Routes>
-              <Route exact path='/' element={<Home />}/>
+              <Route exact path='/' element={<Home search={search} />}/>
               <Route exact path='/cart' element={<Cart />} />
 
             </Routes>
