@@ -45,7 +45,7 @@ const Sort = ({sortIndex, setSortIndex}) => {
               list.map((obj, i)=>{
 
                 return(
-                  <li onClick={()=> onClickSortItem(obj)} className={sortIndex.sort === obj.sort && "active"}>{obj.name}</li>
+                  <li onClick={()=> onClickSortItem(obj)} className={sortIndex.sort === obj.sort ? "active":''}>{obj.name}</li>
                 )
              })
             }
