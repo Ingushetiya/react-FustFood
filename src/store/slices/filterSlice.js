@@ -4,9 +4,10 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
    categoryId: 0,
+   currentpage: 1,
    sort: {
     name:"популярности", 
-    sort: "raiting"
+    sortProperty: "raiting"
    }
 }
 
@@ -16,8 +17,15 @@ const initialState = {
     reducers: {
         setCategoryId (state, action){
             state.categoryId = action.payload
+        },
+        
+        setSort (state, action) {
+            state.sort = action.payload
+        }, 
+        setCurrentPage (state, action){
+            state.currentpage = action.payload
         }
     }
 })
-export const { setCategoryId } = filterSlice.actions
+export const { setCategoryId, setSort, setCurrentPage } = filterSlice.actions
 export default filterSlice.reducer
