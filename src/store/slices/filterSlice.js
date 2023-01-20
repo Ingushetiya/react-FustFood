@@ -5,13 +5,13 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     searchValue: '',
     categoryId: 0,
-    currentpage: 1,
+    currentPage: 1,
     sort: {
         name:"популярности", 
         sortProperty: "raiting"
    }
 }
-
+ 
  const filterSlice = createSlice({
     name: "filters",
     initialState, 
@@ -23,14 +23,14 @@ const initialState = {
             state.sort = action.payload
         }, 
         setCurrentPage (state, action){
-            state.currentpage = action.payload
+            state.currentPage = action.payload
         }, 
-        setfiltter(state, action){
-            state.currentpage = Number(action.payload.currentpage)
+        setFilters (state, action){
+            state.currentPage = Number(action.payload.currentPage)
             state.categoryId = Number(action.payload.categoryId)
-            state.sort = action.payload.sort           
+            state.sort = action.payload.sort      
         }
     }
 })
-export const { setCategoryId, setSort, setCurrentPage } = filterSlice.actions
+export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions
 export default filterSlice.reducer
