@@ -21,8 +21,8 @@ import {
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isSearch = useRef(false)
-  const isMounted = useRef(false)
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
   const categoryId = useSelector((state) => state.filterSlice.categoryId);
   const sortType = useSelector((state) => state.filterSlice.sort);
@@ -55,6 +55,23 @@ const Home = () => {
       })
       .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    //Проверка был ли первый рендер или изменение параметров, если был то он вщивает в адресную строку параметры из первого рендера
+
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sortType.sortProperty,
+        categoryId,
+        currentPage,
+      });
+      console.log(queryString);
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sortType.sortProperty, search, currentPage]);
+
+  // если был первый рендер, то проверяем URL-параметры и сохраняем в Redux
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
@@ -67,30 +84,17 @@ const Home = () => {
           sort,
         })
       );
-      isSearch.current = true
-    
+      isSearch.current = true;
     }
   }, []);
 
+    //Если был первый рендер то запрашиваем пиццы
   useEffect(() => {
     window.scrollTo(0, 0);
-        if(!isSearch.current){
-          fetchPizzas()
-        }
-        isSearch.current = false
-  }, [categoryId, sortType.sortProperty, search, currentPage]);
-
-  useEffect(() => {
-    if(isMounted.current){
-       const queryString = qs.stringify({
-      sortProperty: sortType.sortProperty,
-      categoryId,
-      currentPage
-    });
-    console.log(queryString);
-    navigate(`?${queryString}`);
+    if (!isSearch.current) {
+      fetchPizzas();
     }
-    isMounted.current = true
+    isSearch.current = false;
   }, [categoryId, sortType.sortProperty, search, currentPage]);
 
   // Search

@@ -26,6 +26,7 @@ const initialState = {
             state.currentPage = action.payload
         }, 
         setFilters (state, action){
+            console.log(state.sort);
             state.currentPage = Number(action.payload.currentPage)
             state.categoryId = Number(action.payload.categoryId)
             state.sort = action.payload.sort      
