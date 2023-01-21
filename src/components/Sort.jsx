@@ -1,34 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../store/slices/filterSlice";
 
- export const sortList = [
-    {name:"популярности (DESC)", sortProperty: "raiting" }, 
-    {name:"популярности (ASK)", sortProperty: "-raiting" }, 
-    {name:"цене (DESC)", sortProperty: "price" }, 
-    {name:"цене (ASK)", sortProperty: "-price" }, 
-    {name: "алфавиту (DESC)", sortProperty:"title"},
-    {name: "алфавиту (ASK)", sortProperty:"-title"}
-]
+export const sortList = [
+  { name: "популярности (DESC)", sortProperty: "raiting" },
+  { name: "популярности (ASK)", sortProperty: "-raiting" },
+  { name: "цене (DESC)", sortProperty: "price" },
+  { name: "цене (ASK)", sortProperty: "-price" },
+  { name: "алфавиту (DESC)", sortProperty: "title" },
+  { name: "алфавиту (ASK)", sortProperty: "-title" },
+];
 
 const Sort = () => {
-  const dispatch = useDispatch()
-  const sort = useSelector((state)=>state.filterSlice.sort)
-
-
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filterSlice.sort);
+  const sortRef = useRef();
   const [sortOpen, setSortOpen] = useState(false);
-  
- 
-  
 
-  
-  const onClickSortItem = (obj) =>{
-    dispatch(setSort(obj))
-    setSortOpen(false)
-  }
+  const onClickSortItem = (obj) => {
+    dispatch(setSort(obj));
+    setSortOpen(false);
+  };
+
+ useEffect(() => {
+
+    const handleClickOutside = (event)=>{
+      const path = event.path || (event.composedPath && event.composedPath())
+      console.log(path);
+      if(!path.includes(sortRef.current)){
+        setSortOpen(false)
+        console.log("click outside")
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside)
+   return () => {
+     document.body.removeEventListener("click", handleClickOutside )
+   }
+ }, [])
+ 
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
@@ -43,19 +55,24 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={()=>setSortOpen(!sortOpen)}>{sort.name}</span>
+        <span onClick={() => setSortOpen(!sortOpen)}>{sort.name}</span>
       </div>
       {sortOpen && (
         <div className="sort__popup">
           <ul>
-            {
-              sortList.map((obj, i)=>{
-
-                return(
-                  <li key={i} onClick={()=> onClickSortItem(obj)} className={sort.sortProperty === obj.sortProperty ? "active":''}>{obj.name}</li>
-                )
-             })
-            }
+            {sortList.map((obj, i) => {
+              return (
+                <li
+                  key={i}
+                  onClick={() => onClickSortItem(obj)}
+                  className={
+                    sort.sortProperty === obj.sortProperty ? "active" : ""
+                  }
+                >
+                  {obj.name}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

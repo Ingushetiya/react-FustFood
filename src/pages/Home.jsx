@@ -65,7 +65,7 @@ const Home = () => {
         categoryId,
         currentPage,
       });
-      console.log(queryString);
+
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
