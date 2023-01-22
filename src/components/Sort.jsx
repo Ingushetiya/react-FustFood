@@ -25,11 +25,10 @@ const Sort = () => {
  useEffect(() => {
 
     const handleClickOutside = (event)=>{
+      
       const path = event.path || (event.composedPath && event.composedPath())
-      console.log(path);
       if(!path.includes(sortRef.current)){
         setSortOpen(false)
-        console.log("click outside")
       }
     }
     document.body.addEventListener("click", handleClickOutside)
