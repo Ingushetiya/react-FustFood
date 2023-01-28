@@ -39,23 +39,22 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setLoading(true);
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sortProperty.replace("-", "");
     const category = categoryId > 0 && `category=${categoryId}`;
     const searchValue = search && `&filter=${search}`;
-    axios
-      .get(
-        `https://63bb21d2cf99234bfa53c0bd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${searchValue}`
-      )
-      .then((json) => {
-        setItems(json.data);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
+   try {
+    const json = await axios.get(
+      `https://63bb21d2cf99234bfa53c0bd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${searchValue}`
+    )   
+      setItems(json.data);
+      setLoading(false);     
+   } catch (error) {
+    return console.error(error);
+   }
   };
-
   useEffect(() => {
     //Проверка был ли первый рендер или изменение параметров, если был то он вщивает в адресную строку параметры из первого рендера
 
