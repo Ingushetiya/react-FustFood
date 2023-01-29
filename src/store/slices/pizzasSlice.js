@@ -3,7 +3,8 @@ import axios from "axios"
 
 
 const initialState = {
-    items: []
+    items: [],
+    status: 'loading'
 }
 export const getPizzas = createAsyncThunk('pizza/getPizza', async (params)=>{
     const {order, sortBy, category, searchValue, currentPage} = params
@@ -22,14 +23,17 @@ const pizzasSlice = createSlice({
         }
     },
     extraReducers:{
-        [getPizzas.pending]: (state, action)=>{
-            console.log("Идет отравка запроса");
+        [getPizzas.pending]: (state)=>{
+            state.status = 'loading'
+            state.items = []
         },
         [getPizzas.fulfilled]: (state, action)=>{
-            
+            state.items = action.payload
+            state.status = 'success'
         },
-        [getPizzas.rejected]: (state, action) =>{
-
+        [getPizzas.rejected]: (state) =>{
+            state.status = 'error'
+            state.items = []
         }
     }
 })

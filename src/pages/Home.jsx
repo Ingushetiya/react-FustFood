@@ -27,10 +27,12 @@ const Home = () => {
   const categoryId = useSelector((state) => state.filterSlice.categoryId);
   const sortType = useSelector((state) => state.filterSlice.sort);
   const currentPage = useSelector((state) => state.filterSlice.currentPage);
-  const items = useSelector(state => state.pizzas.items)
-  const { search } = useContext(searchContext);
-  const [loading, setLoading] = useState([]);
+  const items = useSelector((state) => state.pizzas.items);
+  const status = useSelector((state) => state.pizzas.status);
 
+
+
+  const { search } = useContext(searchContext);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -41,19 +43,20 @@ const Home = () => {
   };
 
   const fetchPizzas = async () => {
-    setLoading(true);
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sortProperty.replace("-", "");
     const category = categoryId > 0 && `category=${categoryId}`;
     const searchValue = search && `&filter=${search}`;
-   try { 
-      dispatch(getPizzas({
-        order, sortBy, category, searchValue, currentPage
-      }))
-      setLoading(false);     
-   } catch (error) {
-    return console.error(error);
-   }
+    dispatch(
+      getPizzas({
+        order,
+        sortBy,
+        category,
+        searchValue,
+        currentPage,
+      })
+    );
+    window.scrollTo(0, 0);
   };
   useEffect(() => {
     //Проверка был ли первый рендер или изменение параметров, если был то он вщивает в адресную строку параметры из первого рендера
@@ -87,9 +90,8 @@ const Home = () => {
     }
   }, []);
 
-    //Если был первый рендер то запрашиваем пиццы
+  //Если был первый рендер то запрашиваем пиццы
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (!isSearch.current) {
       fetchPizzas();
     }
@@ -113,11 +115,21 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {loading
-          ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-          : filtered}
-      </div>
+      {status === "error" ? (
+        <div className="content__info-error"> <h2>
+        Произошла ошибка.  <icon>😕</icon>
+      </h2>
+      <p>
+        К сожаление не удалось получить пиццы. <br /> Попробуйте повторить попытку позже.
+      </p> </div>
+      ) : (
+        <div className="content__items">
+          {status === "loading"
+            ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
+            : filtered}
+        </div>
+      )}
+
       <Paginotion currentPage={currentPage} setPages={onChangeCurrentPage} />
     </div>
   );
