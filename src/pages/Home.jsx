@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +16,7 @@ import {
   setCurrentPage,
   setFilters,
 } from "../store/slices/filterSlice";
+import { getPizzas } from "../store/slices/pizzasSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,9 +27,10 @@ const Home = () => {
   const categoryId = useSelector((state) => state.filterSlice.categoryId);
   const sortType = useSelector((state) => state.filterSlice.sort);
   const currentPage = useSelector((state) => state.filterSlice.currentPage);
+  const items = useSelector(state => state.pizzas.items)
   const { search } = useContext(searchContext);
   const [loading, setLoading] = useState([]);
-  const [items, setItems] = useState([]);
+
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -45,11 +46,10 @@ const Home = () => {
     const sortBy = sortType.sortProperty.replace("-", "");
     const category = categoryId > 0 && `category=${categoryId}`;
     const searchValue = search && `&filter=${search}`;
-   try {
-    const json = await axios.get(
-      `https://63bb21d2cf99234bfa53c0bd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${searchValue}`
-    )   
-      setItems(json.data);
+   try { 
+      dispatch(getPizzas({
+        order, sortBy, category, searchValue, currentPage
+      }))
       setLoading(false);     
    } catch (error) {
     return console.error(error);
