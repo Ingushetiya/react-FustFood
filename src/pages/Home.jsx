@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Paginotion from "../components/Pagination";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -9,14 +9,13 @@ import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Sort, { sortList } from "../components/Sort";
 
-import { searchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../store/slices/filterSlice";
-import { getPizzas } from "../store/slices/pizzasSlice";
+import { getPizzas, selectPizzaData } from "../store/slices/pizzasSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,12 +26,10 @@ const Home = () => {
   const categoryId = useSelector((state) => state.filterSlice.categoryId);
   const sortType = useSelector((state) => state.filterSlice.sort);
   const currentPage = useSelector((state) => state.filterSlice.currentPage);
-  const items = useSelector((state) => state.pizzas.items);
+  const searchValue = useSelector(state => state.filterSlice.searchValue)
+  const items = useSelector(selectPizzaData);
   const status = useSelector((state) => state.pizzas.status);
 
-
-
-  const { search } = useContext(searchContext);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -46,13 +43,13 @@ const Home = () => {
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sortProperty.replace("-", "");
     const category = categoryId > 0 && `category=${categoryId}`;
-    const searchValue = search && `&filter=${search}`;
+    const search = searchValue && `&filter=${searchValue}`;
     dispatch(
       getPizzas({
         order,
         sortBy,
         category,
-        searchValue,
+        search,
         currentPage,
       })
     );
@@ -71,7 +68,7 @@ const Home = () => {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [categoryId, sortType.sortProperty, search, currentPage]);
+  }, [categoryId, sortType.sortProperty, searchValue, currentPage]);
 
   // если был первый рендер, то проверяем URL-параметры и сохраняем в Redux
   useEffect(() => {
@@ -96,17 +93,19 @@ const Home = () => {
       fetchPizzas();
     }
     isSearch.current = false;
-  }, [categoryId, sortType.sortProperty, search, currentPage]);
+  }, [categoryId, sortType.sortProperty, searchValue, currentPage]);
 
   // Search
   const filtered = items
     .filter((item) => {
-      if (item.title.toLowerCase().includes(search.toLowerCase())) {
+      if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
       return false;
     })
-    .map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+    .map((obj) => <Link key={obj.id}  to={`/pizza/${obj.id}`}>
+      <PizzaBlock  {...obj} />
+    </Link>);
 
   return (
     <div className="container">

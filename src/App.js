@@ -1,33 +1,37 @@
-import React, { createContext, useState } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import "./scss/app.scss"
+import FullPizza from './pages/FullPizza';
+import MainLayout from './layouts/MainLayout';
 // Надо очистить App от лишнего мусора
 
-export const searchContext = createContext();
+
 function App() {
 
-  const [search, setSearch] = useState('')
+
   return (
     <div className="App">
-      <searchContext.Provider value={{search, setSearch}}>
-      <div className="wrapper">
-        <Header />
-        <div className="content">
-         
-            <Routes>
-              <Route exact path='/' element={<Home/>}/>
-              <Route exact path='/cart' element={<Cart />} />
 
-            </Routes>
+   
+       <Routes>
+          <Route path='/' element={<MainLayout />}>
+              <Route exact path='' element={<Home/>} />
+              <Route exact path='cart' element={<Cart />} />
+              <Route exact path='pizza/:id' element={<FullPizza />} />
+          </Route>
+       </Routes>
+         
+            {/* <Routes>
+              
+            </Routes> */}
         
-        </div>
+     
       </div>
-      </searchContext.Provider>
-    </div>
+
   );
 }
 
