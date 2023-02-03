@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
     const {id} = useParams()
     const navigate = useNavigate()
     const [pizza, setPizza] = useState()
