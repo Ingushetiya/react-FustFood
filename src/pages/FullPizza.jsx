@@ -7,11 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const FullPizza: React.FC = () => {
     const {id} = useParams()
     const navigate = useNavigate()
-    const [pizza, setPizza] = useState<{
-        imageUrl: string;
-        title: string;
-        price: number; 
-    }>()
+    const [pizza, setPizza] = useState()
 
    useEffect(() => {
      const fetchPizza = async () =>{

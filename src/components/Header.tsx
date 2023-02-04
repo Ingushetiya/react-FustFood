@@ -5,10 +5,12 @@ import { Link, useLocation } from "react-router-dom";
 import headerLogo from "../assets/img/pizza-logo.svg"
 import { selectCart } from "../store/slices/cartSlice";
 import Search from "./Search";
-const Header = () => {
+const Header: React.FC = () => {
   const location = useLocation()
   const {products, totalPrice} = useSelector(selectCart)
-  const totalCount = products.reduce((sum, item)=> sum + item.count, 0)
+
+  const totalCount = products.reduce((sum: number, item: any)=> sum + item.count, 0)
+
   return (
     <div className="header">
       <div className="container">
