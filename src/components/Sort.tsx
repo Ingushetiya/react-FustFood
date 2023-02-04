@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../store/slices/filterSlice";
 
 
-
-export const sortList:{
+type SortItem = {
   name: string;
   sortProperty: string;
-}[] = [
+}
+
+
+export const sortList: SortItem[] = [
   { name: "популярности (DESC)", sortProperty: "raiting" },
   { name: "популярности (ASK)", sortProperty: "-raiting" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -22,7 +24,7 @@ const Sort: React.FC = () => {
   const sortRef = useRef();
   const [sortOpen, setSortOpen] = useState(false);
 
-  const onClickSortItem = (obj) => {
+  const onClickSortItem = (obj: SortItem) => {
     dispatch(setSort(obj));
     setSortOpen(false);
   };
