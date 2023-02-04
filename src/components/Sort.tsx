@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../store/slices/filterSlice";
 
-export const sortList = [
+
+
+export const sortList:{
+  name: string;
+  sortProperty: string;
+}[] = [
   { name: "популярности (DESC)", sortProperty: "raiting" },
   { name: "популярности (ASK)", sortProperty: "-raiting" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -11,7 +16,7 @@ export const sortList = [
   { name: "алфавиту (ASK)", sortProperty: "-title" },
 ];
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
   const sortRef = useRef();
