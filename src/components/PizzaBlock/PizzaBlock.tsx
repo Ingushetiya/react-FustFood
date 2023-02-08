@@ -1,28 +1,37 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addProduct, selectCartItemById } from "../../store/slices/cartSlice";
-const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, selectCartItemById } from '../../store/slices/cartSlice';
 
-  const cartProduct = useSelector(selectCartItemById(id))
-  const addedCount = cartProduct ? cartProduct.count : 0
-  const dispatch = useDispatch()
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
 
-  const typeNames = ["тонкое", "традицирнное"];
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+  const cartProduct = useSelector(selectCartItemById(id));
+  const addedCount = cartProduct ? cartProduct.count : 0;
+  const dispatch = useDispatch();
+
+  const typeNames = ['тонкое', 'традицирнное'];
 
   const [activeTypes, setActiveTypes] = useState(0);
   const [acticeSize, setActiveSizes] = useState(0);
 
-  const onClickAdd = () =>{
+  const onClickAdd = () => {
     const product = {
-      id, 
+      id,
       title,
-      price, 
+      price,
       imageUrl,
-      type: typeNames[activeTypes], 
-      size: sizes[acticeSize]
-    }
-    dispatch(addProduct(product))
-  }
+      type: typeNames[activeTypes],
+      size: sizes[acticeSize],
+    };
+    dispatch(addProduct(product));
+  };
 
   return (
     <div className="pizza-block-wrapper">
@@ -36,8 +45,7 @@ const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
                 <li
                   key={typeId}
                   onClick={() => setActiveTypes(typeId)}
-                  className={activeTypes === typeId ? "active" : ''}
-                >
+                  className={activeTypes === typeId ? 'active' : ''}>
                   {typeNames[typeId]}
                 </li>
               );
@@ -49,8 +57,7 @@ const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
                 <li
                   key={index}
                   onClick={() => setActiveSizes(index)}
-                  className={acticeSize === index ? "active" : ""}
-                >
+                  className={acticeSize === index ? 'active' : ''}>
                   {size} см.
                 </li>
               );
@@ -65,14 +72,13 @@ const PizzaBlock = ({id, title, price, imageUrl, sizes, types }) => {
               height="12"
               viewBox="0 0 12 12"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
                 fill="white"
               />
             </svg>
-            <span >Добавить</span>
+            <span>Добавить</span>
             {addedCount > 0 && <i>{addedCount}</i>}
           </div>
         </div>
