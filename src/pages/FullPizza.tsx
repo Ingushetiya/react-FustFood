@@ -25,8 +25,10 @@ const FullPizza: React.FC = () => {
   if (!pizza) {
     return <div>"Загрузка ...."</div>;
   }
+  //посмотреть оштбки
   return (
     <div className="container">
+       
       <img src={pizza.imageUrl} alt="pizza" />
       <h2>{pizza.title}</h2>
       <p>

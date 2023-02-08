@@ -14,6 +14,7 @@ import { setCategoryId, setCurrentPage, setFilters } from '../store/slices/filte
 import { getPizzas, selectPizzaData } from '../store/slices/pizzasSlice';
 
 const Home: React.FC = () => {
+  //посмотреть оштбки
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);

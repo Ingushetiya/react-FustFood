@@ -8,7 +8,7 @@ import { clearBasket } from '../store/slices/cartSlice';
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, products } = useSelector((state) => state.cartSlice);
-
+ //посмотреть оштбки
   const totalCount = products.reduce((sum: number, item: any) => sum + item.count, 0);
   const onClickClear = () => {
     if (window.confirm('Очистить корзину ?')) {

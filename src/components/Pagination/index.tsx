@@ -2,7 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './pagination.module.scss';
-
+//посмотреть оштбки
 type PaginotionProps = {
   currentPage: number;
   setPages: any;

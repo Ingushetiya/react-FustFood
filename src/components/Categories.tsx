@@ -4,7 +4,7 @@ type CategoriesProps = {
   categoryId: number;
   setcategoryId: any;
 };
-
+ //посмотреть оштбки
 const Categories: React.FC<CategoriesProps> = ({ categoryId, setcategoryId }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   return (
