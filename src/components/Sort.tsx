@@ -6,7 +6,7 @@ type SortItem = {
   name: string;
   sortProperty: string;
 };
-//update
+//new update
 // type PopupClick = React.MouseEvent<HTMLBodyElement> & {
 //   path: Node[];
 //   composedPath: Node[];
