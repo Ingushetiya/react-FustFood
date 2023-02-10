@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 
 import debounce from 'lodash.debounce';
- //посмотреть оштбки
+
 import styles from './search.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../store/slices/filterSlice';
@@ -26,7 +26,7 @@ const Search: React.FC = () => {
     [],
   );
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: any) => {
     setValue(e.target.value);
     updateInputValue(e.target.value);
   };

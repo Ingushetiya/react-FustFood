@@ -8,7 +8,7 @@ import Search from './Search';
 const Header: React.FC = () => {
   const location = useLocation();
   const { products, totalPrice } = useSelector(selectCart);
-  //посмотреть оштбки
+
   const totalCount = products.reduce((sum: number, item: any) => sum + item.count, 0);
 
   return (

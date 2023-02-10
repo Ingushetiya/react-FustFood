@@ -6,7 +6,7 @@ type SortItem = {
   name: string;
   sortProperty: string;
 };
-//посмотреть оштбки
+
 export const sortList: SortItem[] = [
   { name: 'популярности (DESC)', sortProperty: 'raiting' },
   { name: 'популярности (ASK)', sortProperty: '-raiting' },

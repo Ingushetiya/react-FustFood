@@ -10,7 +10,7 @@ type PizzaBlockProps = {
   sizes: number[];
   types: number[];
 };
-//посмотреть оштбки
+
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   const cartProduct = useSelector(selectCartItemById(id));
   const addedCount = cartProduct ? cartProduct.count : 0;

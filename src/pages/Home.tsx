@@ -10,7 +10,12 @@ import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Sort, { sortList } from '../components/Sort';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId, setCurrentPage, setFilters } from '../store/slices/filterSlice';
+import {
+  currentPageState,
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from '../store/slices/filterSlice';
 import { getPizzas, selectPizzaData } from '../store/slices/pizzasSlice';
 
 const Home: React.FC = () => {
@@ -19,17 +24,18 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  //@ts-ignore
+
   const categoryId = useSelector((state) => state.filterSlice.categoryId);
-  //@ts-ignore
+
   const sortType = useSelector((state) => state.filterSlice.sort);
-  //@ts-ignore
-  const currentPage = useSelector((state) => state.filterSlice.currentPage);
-  //@ts-ignore
+
+  const currentPage = useSelector(currentPageState);
+  console.log(currentPage);
+
   const searchValue = useSelector((state) => state.filterSlice.searchValue);
-  //@ts-ignore
+
   const items = useSelector(selectPizzaData);
-  //@ts-ignore
+
   const status = useSelector((state) => state.pizzas.status);
 
   const onClickCategory = (idx: number) => {
