@@ -5,7 +5,7 @@ import styles from './pagination.module.scss';
 
 type PaginotionProps = {
   currentPage: number;
-  setPages: any;
+  setPages: (page: number) => void;
 };
 
 const Paginotion: React.FC<PaginotionProps> = ({ currentPage, setPages }) => {

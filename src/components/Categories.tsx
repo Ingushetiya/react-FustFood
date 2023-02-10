@@ -2,11 +2,10 @@ import React from 'react';
 
 type CategoriesProps = {
   categoryId: number;
-  setcategoryId: any;
+  setcategoryId: (index: number) => void;
 };
- 
+const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 const Categories: React.FC<CategoriesProps> = ({ categoryId, setcategoryId }) => {
-  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   return (
     <div className="categories">
       <ul>

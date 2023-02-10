@@ -3,11 +3,15 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-//finished types
+
 const FullPizza: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [pizza, setPizza] = useState();
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
 
   useEffect(() => {
     const fetchPizza = async () => {
@@ -25,10 +29,8 @@ const FullPizza: React.FC = () => {
   if (!pizza) {
     return <div>"Загрузка ...."</div>;
   }
-  //посмотреть оштбки
   return (
     <div className="container">
-       
       <img src={pizza.imageUrl} alt="pizza" />
       <h2>{pizza.title}</h2>
       <p>

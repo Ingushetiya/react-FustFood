@@ -13,31 +13,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   categoryIdState,
   currentPageState,
+  searchValueState,
+  selectSort,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from '../store/slices/filterSlice';
-import { getPizzas, selectPizzaData } from '../store/slices/pizzasSlice';
+import { getPizzas, selectPizzaData, statusState } from '../store/slices/pizzasSlice';
 
 const Home: React.FC = () => {
-  //посмотреть оштбки
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
   const categoryId = useSelector(categoryIdState);
-  console.log(categoryIdte);
 
-  const sortType = useSelector((state) => state.filterSlice.sort);
+  const sortType = useSelector(selectSort);
 
   const currentPage = useSelector(currentPageState);
 
-  const searchValue = useSelector((state) => state.filterSlice.searchValue);
+  const searchValue = useSelector(searchValueState);
 
   const items = useSelector(selectPizzaData);
 
-  const status = useSelector((state) => state.pizzas.status);
+  const status = useSelector(statusState);
 
   const onClickCategory = (idx: number) => {
     dispatch(setCategoryId(idx));
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [categoryId, sortType.sortProperty, searchValue, currentPage]);
+  }, [categoryId, sortType.sortProperty, searchValue, currentPage, navigate]);
 
   // если был первый рендер, то проверяем URL-параметры и сохраняем в Redux
   useEffect(() => {
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
       );
       isSearch.current = true;
     }
-  }, []);
+  }, [dispatch]);
 
   //Если был первый рендер то запрашиваем пиццы
   useEffect(() => {
