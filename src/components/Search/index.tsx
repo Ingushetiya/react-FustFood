@@ -18,7 +18,7 @@ const Search: React.FC = () => {
       inputRef.current.focus();
     }
   };
-
+  // Типизировать useCallback
   const updateInputValue = useCallback(
     debounce((str: string) => {
       dispatch(setSearchValue(str));
