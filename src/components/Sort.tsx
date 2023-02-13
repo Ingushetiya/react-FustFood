@@ -6,11 +6,6 @@ type SortItem = {
   name: string;
   sortProperty: string;
 };
-//new update
-// type PopupClick = React.MouseEvent<HTMLBodyElement> & {
-//   path: Node[];
-//   composedPath: Node[];
-// };
 
 export const sortList: SortItem[] = [
   { name: 'популярности (DESC)', sortProperty: 'raiting' },

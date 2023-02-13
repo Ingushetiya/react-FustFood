@@ -18,12 +18,12 @@ const Search: React.FC = () => {
       inputRef.current.focus();
     }
   };
-  // Типизировать useCallback
+  // Типизировать useCallback  () => (filterValue: string): void =>
   const updateInputValue = useCallback(
-    debounce((str: string) => {
+    (str: string) => debounce((str): void => {
       dispatch(setSearchValue(str));
     }, 1000),
-    [],
+    [dispatch],
   );
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
