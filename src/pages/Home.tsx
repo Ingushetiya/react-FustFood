@@ -7,9 +7,9 @@ import Paginotion from '../components/Pagination';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
-import Sort, { sortList } from '../components/Sort';
+import SortPopup, { sortList } from '../components/Sort';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   categoryIdState,
   currentPageState,
@@ -19,7 +19,12 @@ import {
   setCurrentPage,
   setFilters,
 } from '../store/slices/filterSlice';
-import { getPizzas, selectPizzaData, statusState } from '../store/slices/pizzasSlice';
+import {
+  getPizzas,
+  SearchPizzaParams,
+  selectPizzaData,
+  statusState,
+} from '../store/slices/pizzasSlice';
 import { useAppDispatch } from 'store';
 
 const Home: React.FC = () => {
@@ -82,12 +87,14 @@ const Home: React.FC = () => {
   // если был первый рендер, то проверяем URL-параметры и сохраняем в Redux
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue: params.search,
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
         }),
       );
       isSearch.current = true;
@@ -120,7 +127,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} setcategoryId={onClickCategory} />
-        <Sort />
+        <SortPopup />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
