@@ -20,10 +20,11 @@ import {
   setFilters,
 } from '../store/slices/filterSlice';
 import { getPizzas, selectPizzaData, statusState } from '../store/slices/pizzasSlice';
+import { useAppDispatch } from 'store';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -53,13 +54,12 @@ const Home: React.FC = () => {
     const category = categoryId > 0 && `category=${categoryId}`;
     const search = searchValue && `&filter=${searchValue}`;
     dispatch(
-      //@ts-ignore
       getPizzas({
         order,
         sortBy,
-        category,
+        category: String(category),
         search,
-        currentPage,
+        currentPage: String(currentPage),
       }),
     );
     window.scrollTo(0, 0);
