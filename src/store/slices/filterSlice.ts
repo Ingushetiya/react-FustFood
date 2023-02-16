@@ -38,6 +38,7 @@ const filterSlice = createSlice({
       state.categoryId = action.payload;
     },
     setSearchValue(state, action: PayloadAction<string>) {
+      console.log(action);
       state.searchValue = action.payload;
     },
     setSort(state, action: PayloadAction<Sort>) {
