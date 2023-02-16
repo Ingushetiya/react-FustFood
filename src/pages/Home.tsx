@@ -110,6 +110,7 @@ const Home: React.FC = () => {
   }, [categoryId, sortType.sortProperty, searchValue, currentPage]);
 
   // Search
+
   const filtered = items
     .filter((item: any) => {
       if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {

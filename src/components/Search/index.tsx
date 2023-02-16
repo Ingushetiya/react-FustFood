@@ -9,24 +9,33 @@ import { setSearchValue } from '../../store/slices/filterSlice';
 const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
-    dispatch(setSearchValue(value));
+    dispatch(setSearchValue(''));
     setValue('');
     if (inputRef.current) {
       inputRef.current.focus();
     }
   };
   // Типизировать useCallback  () => (filterValue: string): void =>
+  // const updateInputValue = useCallback(
+  //   (str: string) =>
+  //     debounce((str): void => {
+  //       dispatch(setSearchValue(str));
+  //     }, 1000),
+  //   [dispatch],
+  // );
   const updateInputValue = useCallback(
-    (str: string) => debounce((str): void => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
-    }, 1000),
-    [dispatch],
+    }, 150),
+    [],
   );
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
     setValue(event.target.value);
     updateInputValue(event.target.value);
   };
