@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 import qs from 'qs';
 import { Link, useNavigate } from 'react-router-dom';
@@ -45,9 +45,9 @@ const Home: React.FC = () => {
 
   const status = useSelector(statusState);
 
-  const onClickCategory = (idx: number) => {
+  const onClickCategory = useCallback((idx: number) => {
     dispatch(setCategoryId(idx));
-  };
+  }, []);
 
   const onChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} setcategoryId={onClickCategory} />
-        <SortPopup />
+        <SortPopup value = {sortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
