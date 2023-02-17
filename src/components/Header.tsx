@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -7,9 +7,18 @@ import { selectCart } from '../store/slices/cartSlice';
 import Search from './Search';
 const Header: React.FC = () => {
   const location = useLocation();
+  const isMounted = useRef(false);
   const { products, totalPrice } = useSelector(selectCart);
 
   const totalCount = products.reduce((sum: number, item: any) => sum + item.count, 0);
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(products);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [products]);
 
   return (
     <div className="header">
@@ -23,7 +32,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        <Search />
+        {location.pathname !== '/cart' && <Search />}
         <div className="header__cart">
           {location.pathname !== '/cart' && (
             <Link to="/cart" className="button button--cart">

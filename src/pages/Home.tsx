@@ -1,31 +1,21 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 
-import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
-
 import Paginotion from '../components/Pagination';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
-import SortPopup, { sortList } from '../components/Sort';
 
 import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from 'store';
 import {
   categoryIdState,
   currentPageState,
   searchValueState,
   selectSort,
-  setCategoryId,
-  setCurrentPage,
-  // setFilters,
-} from '../store/slices/filterSlice';
-import {
-  getPizzas,
-  // SearchPizzaParams,
-  selectPizzaData,
-  statusState,
-} from '../store/slices/pizzasSlice';
-import { useAppDispatch } from 'store';
+} from 'store/filter/selector';
+import { selectPizzaData, statusState } from 'store/pizza/selectors';
+import { setCategoryId, setCurrentPage } from 'store/filter/slice';
 
 const Home: React.FC = () => {
   // const navigate = useNavigate();
@@ -34,6 +24,7 @@ const Home: React.FC = () => {
   // const isMounted = useRef(false);
 
   const categoryId = useSelector(categoryIdState);
+  console.log(categoryId);
 
   const sortType = useSelector(selectSort);
 
@@ -124,7 +115,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} setcategoryId={onClickCategory} />
-        <SortPopup value = {sortType} />
+        <SortPopup value={sortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
