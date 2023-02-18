@@ -12,3 +12,4 @@ export interface CartSliseState {
   totalPrice: number;
   products: CartItem[];
 }
+//

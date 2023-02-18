@@ -16,6 +16,8 @@ import {
 } from 'store/filter/selector';
 import { selectPizzaData, statusState } from 'store/pizza/selectors';
 import { setCategoryId, setCurrentPage } from 'store/filter/slice';
+import { getPizzas } from 'store/pizza/asyncActions';
+import SortPopup from 'components/Sort';
 
 const Home: React.FC = () => {
   // const navigate = useNavigate();
@@ -23,18 +25,17 @@ const Home: React.FC = () => {
   const isSearch = useRef(false);
   // const isMounted = useRef(false);
 
-  const categoryId = useSelector(categoryIdState);
-  console.log(categoryId);
+  const { categoryId } = useSelector(categoryIdState);
 
   const sortType = useSelector(selectSort);
 
-  const currentPage = useSelector(currentPageState);
+  const { currentPage } = useSelector(currentPageState);
 
-  const searchValue = useSelector(searchValueState);
+  const { searchValue } = useSelector(searchValueState);
 
-  const items = useSelector(selectPizzaData);
+  const { items } = useSelector(selectPizzaData);
 
-  const status = useSelector(statusState);
+  const { status } = useSelector(statusState);
 
   const onClickCategory = useCallback((idx: number) => {
     dispatch(setCategoryId(idx));
@@ -45,8 +46,8 @@ const Home: React.FC = () => {
   };
 
   const fetchPizzas = async () => {
-    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-    const sortBy = sortType.sortProperty.replace('-', '');
+    const order = sortType.sort.sortProperty.includes('-') ? 'asc' : 'desc';
+    const sortBy = sortType.sort.sortProperty.replace('-', '');
     const category = categoryId > 0 && `category=${categoryId}`;
     const search = searchValue && `&filter=${searchValue}`;
     dispatch(
@@ -98,7 +99,7 @@ const Home: React.FC = () => {
       fetchPizzas();
     }
     isSearch.current = false;
-  }, [categoryId, sortType.sortProperty, searchValue, currentPage]);
+  }, [categoryId, sortType.sort.sortProperty, searchValue, currentPage]);
 
   // Search
 
@@ -115,7 +116,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} setcategoryId={onClickCategory} />
-        <SortPopup value={sortType} />
+        <SortPopup value={sortType.sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
