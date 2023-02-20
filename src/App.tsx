@@ -5,7 +5,7 @@ import Cart from './pages/Cart';
 import './scss/app.scss';
 import FullPizza from './pages/FullPizza';
 import MainLayout from './layouts/MainLayout';
-// Надо очистить App от лишнего мусора
+
 
 function App() {
   return (
