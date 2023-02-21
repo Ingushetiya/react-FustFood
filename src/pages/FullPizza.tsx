@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const FullPizza: React.FC = () => {
   const { id } = useParams();
@@ -39,6 +39,11 @@ const FullPizza: React.FC = () => {
         ducimus ad porro culpa?
       </p>
       <h2>{pizza.price} $</h2>
+      <Link to={'/'}>
+        <button className="button button--outline button--add">
+          <span>Назад</span>
+        </button>
+      </Link>
     </div>
   );
 };
