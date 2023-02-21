@@ -64,6 +64,9 @@ const Home: React.FC = () => {
     );
     window.scrollTo(0, 0);
   };
+
+  //Как нибудь поюзать эту ошибку
+
   // useEffect(() => {
   //   //Проверка был ли первый рендер или изменение параметров, если был то он вщивает в адресную строку параметры из первого рендера
 
@@ -103,8 +106,6 @@ const Home: React.FC = () => {
     }
     isSearch.current = false;
   }, [categoryId, sortType.sort.sortProperty, searchValue, currentPage]);
-
-  // Search
 
   const filtered = items
     .filter((item: any) => {
