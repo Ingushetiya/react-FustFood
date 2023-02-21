@@ -37,9 +37,12 @@ const Home: React.FC = () => {
 
   const { status } = useSelector(statusState);
 
-  const onClickCategory = useCallback((idx: number) => {
-    dispatch(setCategoryId(idx));
-  }, []);
+  const onClickCategory = useCallback(
+    (idx: number) => {
+      dispatch(setCategoryId(idx));
+    },
+    [dispatch],
+  );
 
   const onChangeCurrentPage = (page: number) => {
     dispatch(setCurrentPage(page));
