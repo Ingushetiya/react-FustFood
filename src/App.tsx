@@ -8,8 +8,8 @@ import './scss/app.scss';
 // import FullPizza from './pages/FullPizza';
 import MainLayout from './layouts/MainLayout';
 
-const Cart = React.lazy(() => import('./pages/Cart'));
-const FullPizza = React.lazy(() => import('./pages/FullPizza'));
+const Cart = React.lazy(() => import(/*webpackChunkName: "Cart" */ './pages/Cart'));
+const FullPizza = React.lazy(() => import(/*webpackChunkName: "FullPizza"*/ './pages/FullPizza'));
 
 function App() {
   return (
